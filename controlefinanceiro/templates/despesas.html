@@ -1,0 +1,36 @@
+  {% extends 'index.html' %}
+{% block content %}
+  <h3>Receitas</h3>
+  <div class="container mt-4">
+    <form method="POST">
+      {% csrf_token %}
+  
+  <!-- Botão adicionar item -->
+      <button type="button" class="btn btn-secondary mt-3" onclick="adicionarItem()">+ Adicionar Receita</button>
+
+
+      <div class="container mt-4">
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Descrição</th>
+            <th>Categoria</th>
+            <th>Valor</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for despesa in despesas %}
+        <tr>
+            <td>{{ despesa.data }}</td>
+            <td>{{ despesa.descricao }}</td>
+            <td>{{ despesa.categoria }}</td>
+            <td>{{ despesa.valor }}</td>
+            <td>
+                <a href="{% url 'editar_despesa' despesa.id %}" class="btn btn-primary btn-sm">Editar</a>
+                <a href="{% url 'excluir_despesa' despesa.id %}" class="btn btn-danger btn-sm">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endblock %}

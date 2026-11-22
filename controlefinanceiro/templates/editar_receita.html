@@ -1,0 +1,58 @@
+
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h2>Editar receita</h2>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <div>
+        <label>Descrição:</label>
+        {{ form.descricao }}
+        {{ form.descricao.errors }}
+    </div>
+
+    <div>
+        <label>Categoria:</label>
+        {{ form.categoria }}
+        {{ form.categoria.errors }}
+    </div>
+
+    <div>
+        <label>Valor:</label>
+        {{ form.valor }}
+        {{ form.valor.errors }}
+    </div>
+
+    <div>
+        <label>Data:</label>
+        {{ form.data }}
+        {{ form.data.errors }}
+    </div>
+
+    <div>
+        <label>Forma de recebimento:</label>
+        {{ form.forma_pagamento }}
+        {{ form.forma_pagamento.errors }}
+    </div>
+
+    <div>
+        <label>Observação:</label>
+        {{ form.observacao }}
+        {{ form.observacao.errors }}
+    </div>
+
+    <button type="submit">
+        Salvar alterações
+    </button>
+
+    <a href="{% url 'receitas' %}">
+        Cancelar
+    </a>
+
+</form>
+
+{% endblock %}

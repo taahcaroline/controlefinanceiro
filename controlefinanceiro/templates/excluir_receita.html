@@ -1,0 +1,29 @@
+
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h2>Excluir receita</h2>
+
+<p>
+    Tem certeza que deseja excluir
+    <strong>{{ receita.descricao }}</strong>?
+</p>
+
+<p>
+    Valor: R$ {{ receita.valor }}
+</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <button type="submit">
+        Sim, excluir
+    </button>
+
+    <a href="{% url 'receitas' %}">
+        Cancelar
+    </a>
+</form>
+
+{% endblock %}

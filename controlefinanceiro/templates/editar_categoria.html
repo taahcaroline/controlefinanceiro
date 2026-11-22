@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% block content %}
+    <h2>Editar Categoria</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label>Nome</label>
+            {{ form.nome }}
+            {{ form.nome.errors }}
+        </div>
+        <div>
+            <label>Tipo</label>
+            {{ form.tipo }}
+            {{ form.tipo.errors }}
+        </div>
+        <button type="submit">
+            Salvar categoria
+        </button>
+    </form>
+    <a href="{% url 'categorias' %}">
+        Cancelar
+    </a>
+{% endblock %}
