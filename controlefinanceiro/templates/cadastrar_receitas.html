@@ -8,42 +8,43 @@
 <form method="POST">
 
     {% csrf_token %}
-<colgroup>
-    <div>
+<div class="form-cadastro">
+    <div class="row mb-3">
+        <div class="col-6">
         <label>Descrição:</label>
         {{ form.descricao }}
         {{ form.descricao.errors }}
-    </div>
+        </div>
 
-    <div>
+       <div class="col-3">
         <label>Categoria:</label>
         {{ form.categoria }}
         {{ form.categoria.errors }}
-    </div>
-
-    <div>
+       </div></div>
+    <div class="row mb-4">
+    <div class="col-3">
         <label>Valor:</label>
         {{ form.valor }}
         {{ form.valor.errors }}
     </div>
 
-    <div>
+    <div class="col-4">
         <label>Data:</label>
         {{ form.data }}
         {{ form.data.errors }}
     </div>
 
-    <div>
+    <div class="col-3">
         <label>Forma de recebimento:</label>
         {{ form.forma_pagamento }}
         {{ form.forma_pagamento.errors }}
-    </div>
-
-    <div>
+    </div></div>
+    <div class="row g-3">
+    <div class="col-10">
         <label>Observação:</label>
         {{ form.observacao }}
         {{ form.observacao.errors }}
-    </div>
+    </div></div></div>
 
     <button type="submit">
         Salvar alterações

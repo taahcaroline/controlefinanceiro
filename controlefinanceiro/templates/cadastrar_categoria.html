@@ -4,16 +4,17 @@
 <h2>Cadastrar categoria</h2>
 <form method="POST">
     {% csrf_token %}
-    <div>
+    <div class="row">
+        <div class="col-6">
         <label>Nome da categoria:</label>
         {{ form.nome }}
         {{ form.nome.errors }}
-    </div>
-    <div>
+        </div>
+    <div class="col-4">
         <label>Tipo</label>
         {{ form.tipo }}
         {{ form.tipo.errors }}
-    </div>
+    </div></div>
     <button type="submit">
         Salvar categoria
     </button>

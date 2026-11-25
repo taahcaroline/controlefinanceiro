@@ -21,3 +21,15 @@
     flex: 1; 
     padding: 24px; 
 }
+.container-categorias {
+    border: 1px solid #a09b9b;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.form-cadastro{
+    padding: top 10px;
+}
