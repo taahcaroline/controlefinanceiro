@@ -1,12 +1,15 @@
+from datetime import timedelta
 from pyexpat.errors import messages
 
 from django.shortcuts import get_object_or_404, render, redirect
+from django.utils.timezone import localdate
 
 from controlefinanceiro.models import Categoria, Movimentacao
 from .forms import CategoriaForm, ReceitaForm, CadastroUsuarioForm, LoginForm, DespesaForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 
 
 
@@ -133,12 +136,60 @@ def receitas(request):
         tipo='R'
     )
 
+    busca = request.GET.get('q', '')
+    filtro = request.GET.get('filtro', '')
+
+    hoje = localdate()
+
+    # Busca pela descrição
+    if busca:
+        receitas = receitas.filter(
+            Q(descricao__icontains=busca) |
+            Q(observacao__icontains=busca)
+        )
+
+    # Filtros por período
+    if filtro == 'hoje':
+        receitas = receitas.filter(data=hoje)
+
+    elif filtro == 'ontem':
+        ontem = hoje - timedelta(days=1)
+        receitas = receitas.filter(data=ontem)
+
+    elif filtro == 'estasemana':
+        inicio_semana = hoje - timedelta(days=hoje.weekday())
+        receitas = receitas.filter(data__range=[inicio_semana, hoje])
+
+    elif filtro == 'estemes':
+        receitas = receitas.filter(
+            data__year=hoje.year,
+            data__month=hoje.month
+        )
+
+    elif filtro == 'mespassado':
+        primeiro_dia_mes = hoje.replace(day=1)
+        ultimo_dia_mes_anterior = primeiro_dia_mes - timedelta(days=1)
+
+        receitas = receitas.filter(
+            data__year=ultimo_dia_mes_anterior.year,
+            data__month=ultimo_dia_mes_anterior.month
+        )
+
+    elif filtro == 'esteano':
+        receitas = receitas.filter(data__year=hoje.year)
+
+    elif filtro == 'anopassado':
+        receitas = receitas.filter(data__year=hoje.year - 1)
+
     return render(
         request,
         'receitas.html',
-        {'receitas': receitas}
+        {
+            'receitas': receitas,
+            'busca': busca,
+            'filtro': filtro,
+        }
     )
-
 
 @login_required
 def despesas(request):

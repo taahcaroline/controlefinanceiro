@@ -1,38 +1,131 @@
-  {% extends 'index.html' %}
+
+{% extends 'index.html' %}
+
 {% block content %}
+
 <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="mb-0">Receitas</h2>
+    <h2 class="mb-0">Receitas</h2>
 
-        <a href="{% url 'cadastrar_categoria' %}" class="btn btn-success">
-            + Adicionar receita
-        </a></div>
-  <div class="container-categorias mt-4">
-    <form method="POST">
-      {% csrf_token %}
+    <a href="{% url 'cadastrar_receita' %}" class="btn btn-cadastro">
+        + Adicionar receita
+    </a>
+</div>
 
+<!-- Filtros -->
+<form method="GET" class="row g-2 align-items-center mb-3">
 
-      <div class="container mt-4">
-<table class="table table-striped mt-4">
-    <thead>
-        <tr>
-            <th>Data</th>
-            <th>Descrição</th>
-            <th>Categoria</th>
-            <th>Valor</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for receita in receitas %}
-        <tr>
-            <td>{{ receita.data }}</td>
-            <td>{{ receita.descricao }}</td>
-            <td>{{ receita.categoria }}</td>
-            <td>{{ receita.valor }}</td>
-            <td>
-                <a href="{% url 'editar_receita' receita.id %}" class="btn btn-primary btn-sm">Editar</a>
-                <a href="{% url 'excluir_receita' receita.id %}" class="btn btn-danger btn-sm">Excluir</a>
-            </td>
-        </tr>
-        {% endfor %}
-        {% endblock %}
+    <div class="col-md-4 col-12">
+        <input
+            type="text"
+            name="q"
+            class="form-control"
+            placeholder="Buscar receita..."
+            value="{{ busca|default:'' }}"
+        >
+    </div>
+
+    <div class="col-md-4 col-12">
+        <select name="filtro" class="form-select">
+
+            <option value="">-- Todos os períodos --</option>
+
+            <option value="hoje" {% if filtro == "hoje" %}selected{% endif %}>
+                Hoje
+            </option>
+
+            <option value="ontem" {% if filtro == "ontem" %}selected{% endif %}>
+                Ontem
+            </option>
+
+            <option value="estasemana" {% if filtro == "estasemana" %}selected{% endif %}>
+                Esta semana
+            </option>
+
+            <option value="estemes" {% if filtro == "estemes" %}selected{% endif %}>
+                Este mês
+            </option>
+
+            <option value="mespassado" {% if filtro == "mespassado" %}selected{% endif %}>
+                Mês passado
+            </option>
+
+            <option value="esteano" {% if filtro == "esteano" %}selected{% endif %}>
+                Este ano
+            </option>
+
+            <option value="anopassado" {% if filtro == "anopassado" %}selected{% endif %}>
+                Ano passado
+            </option>
+
+        </select>
+    </div>
+
+    <div class="col-md-2 col-6">
+        <button type="submit" class="btn btn-primary w-100">
+            Filtrar
+        </button>
+    </div>
+
+    <div class="col-md-2 col-6">
+        <a href="{% url 'receitas' %}" class="btn btn-secondary w-100">
+            Limpar
+        </a>
+    </div>
+
+</form>
+
+<!-- Tabela de receitas -->
+<div class="container mt-4">
+
+    <table class="table table-striped mt-4">
+
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Categoria</th>
+                <th>Valor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for receita in receitas %}
+
+            <tr>
+                <td>{{ receita.data|date:"d/m/Y" }}</td>
+                <td>{{ receita.descricao }}</td>
+                <td>{{ receita.categoria }}</td>
+                <td>R$ {{ receita.valor }}</td>
+
+                <td>
+                    <a href="{% url 'editar_receita' receita.id %}"
+                       class="btn btn-primary btn-sm">
+                        Editar
+                    </a>
+
+                    <a href="{% url 'excluir_receita' receita.id %}"
+                       class="btn btn-danger btn-sm">
+                        Excluir
+                    </a>
+                </td>
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="5" class="text-center">
+                    Nenhuma receita encontrada.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

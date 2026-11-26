@@ -33,3 +33,31 @@
 .form-cadastro{
     padding: top 10px;
 }
+
+nav a{
+    font-family: "Nunito", sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.btn-cadastro {
+    background: linear-gradient(
+        90deg,
+        rgba(58, 110, 94, 1) 0%,
+        rgba(41, 148, 82, 1) 41%,
+        rgba(88, 163, 136, 1) 100%
+    );
+
+    color: #ffffff !important;
+    font-family: "Nunito", sans-serif !important;
+    font-size: 16px;
+    font-weight: 600;
+
+    border: none;
+    text-decoration: bold;
+}
+
+.btn-cadastro:hover {
+    color: #ffffff !important;
+    opacity: 0.9;
+}
